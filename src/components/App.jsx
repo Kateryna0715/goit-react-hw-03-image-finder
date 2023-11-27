@@ -4,6 +4,7 @@ import Loader from './Loader/Loader';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
+import Modal from './Modal/Modal';
 import Notiflix from 'notiflix';
 
 class App extends Component {
@@ -14,6 +15,8 @@ class App extends Component {
     error: '',
     images: null,
     loadMore: false,
+    isShowModal: false,
+    currentImage: null,
   };
 
   componentDidUpdate(_, prevState) {
@@ -62,15 +65,36 @@ class App extends Component {
       page: prev.page + 1,
     }));
   };
+
+  handleOpenModal = image => {
+    this.setState({
+      currentImage: image,
+      isShowModal: true,
+    });
+  };
+
+  handleCloseModal = image => {
+    this.setState({
+      currentImage: null,
+      isShowModal: false,
+    });
+  };
+
   render() {
-    const { isLoading, images, error, loadMore } = this.state;
+    const { isLoading, images, error, loadMore, isShowModal, currentImage } =
+      this.state;
     return (
       <>
         {isLoading && <Loader />}
         {error && Notiflix.Notify.failure(error)}
         <Searchbar submit={this.handleSubmit} />
-        {images && <ImageGallery images={images} />}
+        {images && (
+          <ImageGallery images={images} onItemClick={this.handleOpenModal} />
+        )}
         {loadMore && <Button onClick={this.handleLoadMore} />}
+        {isShowModal && (
+          <Modal close={this.handleCloseModal} image={currentImage}></Modal>
+        )}
       </>
     );
   }

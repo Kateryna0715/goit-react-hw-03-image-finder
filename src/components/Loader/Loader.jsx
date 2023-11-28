@@ -1,17 +1,24 @@
-import { ColorRing } from 'react-loader-spinner';
+import { Vortex } from 'react-loader-spinner';
 import CSS from './index.module.css';
 
 const Loader = () => {
   return (
     <div className={CSS.blocksWrapper}>
-      <ColorRing
+      <Vortex
         visible={true}
-        height="160"
-        width="160"
-        ariaLabel="blocks-loading"
+        height="80"
+        width="80"
+        ariaLabel="vortex-loading"
         wrapperStyle={{}}
-        wrapperClass=""
-        colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+        wrapperClass="vortex-wrapper"
+        colors={[
+          '#e15b64',
+          '#f47e60',
+          '#f8b26a',
+          '#abbd81',
+          '#849b87',
+          '#6666de',
+        ]}
       />
     </div>
   );

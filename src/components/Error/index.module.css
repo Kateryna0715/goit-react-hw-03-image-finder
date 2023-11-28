@@ -1,0 +1,12 @@
+.errorText {
+  text-align: center;
+  color: darkred;
+}
+.errorText h1 {
+  margin-bottom: 18px;
+  margin-top: 12px;
+}
+.errorText p {
+  font-size: 18px;
+  font-weight: 500;
+}

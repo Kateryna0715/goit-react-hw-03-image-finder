@@ -5,6 +5,7 @@ import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
 import Modal from './Modal/Modal';
+import Error from './Error/Error';
 import Notiflix from 'notiflix';
 
 class App extends Component {
@@ -45,10 +46,10 @@ class App extends Component {
           error: '',
         }));
       } else {
+        this.setState({ loadMore: false });
         Notiflix.Notify.info(
           'Sorry, there are no images matching your search query. Please try again.'
         );
-        this.setState({ loadMore: false });
       }
     } catch (error) {
       this.setState({ error: error.message });
@@ -85,13 +86,16 @@ class App extends Component {
       this.state;
     return (
       <>
+        {error ? (
+          <Error error={error} />
+        ) : (
+          <Searchbar submit={this.handleSubmit} />
+        )}
         {isLoading && <Loader />}
-        {error && Notiflix.Notify.failure(error)}
-        <Searchbar submit={this.handleSubmit} />
         {images && (
           <ImageGallery images={images} onItemClick={this.handleOpenModal} />
         )}
-        {loadMore && <Button onClick={this.handleLoadMore} />}
+        {!isLoading && loadMore && <Button onClick={this.handleLoadMore} />}
         {isShowModal && (
           <Modal close={this.handleCloseModal} image={currentImage}></Modal>
         )}

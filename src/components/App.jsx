@@ -31,11 +31,6 @@ class App extends Component {
   }
 
   handleImages = async (query, page) => {
-    if (query === '') {
-      Notiflix.Notify.info('Please enter a search query');
-      this.setState({ loadMore: false });
-      return;
-    }
     this.setState({ isLoading: true });
     try {
       const data = await getImages(query, page);
@@ -59,7 +54,16 @@ class App extends Component {
   };
 
   handleSubmit = query => {
-    this.setState({ query: query, page: 1, images: [] });
+    this.setState({
+      query,
+      page: 1,
+      isLoading: false,
+      error: '',
+      images: [],
+      loadMore: false,
+      isShowModal: false,
+      currentImage: null,
+    });
   };
   handleLoadMore = () => {
     this.setState(prev => ({

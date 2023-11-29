@@ -2,7 +2,9 @@ import CSS from './index.module.css';
 const Searchbar = ({ submit }) => {
   const handleSubmit = e => {
     e.preventDefault();
-    submit(e.target.query.value);
+    if (e.target.query.value) {
+      submit(e.target.query.value);
+    }
     e.target.reset();
   };
   return (
